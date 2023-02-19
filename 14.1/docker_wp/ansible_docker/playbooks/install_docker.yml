@@ -1,0 +1,94 @@
+---
+- name: Instalación Docker mediante Ansible
+  hosts: EC2
+  become: true
+
+  tasks:
+
+# ----------- Variables -------------
+    - name: Vars
+      ansible.builtin.include_vars:
+        ../variables.yml
+# -----------------------------------
+
+    - name: Actualizar repositorios
+      ansible.builtin.apt:
+        update_cache: true
+
+# ----------- Docker -------------
+    - name: Install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+# -----------------------------------
+
+# -------- Docker Compose -----------
+
+    - name: Directorio de Docker Compose
+      ansible.builtin.file:
+        path: "{{ Type_Install.User_Home }}"
+        mode: 0775
+        owner: "{{ User.Name_Group }}"
+        group: "{{ User.Name_Group }}"
+        state: directory
+
+    - name: Instalar Docker Compose
+      ansible.builtin.get_url:
+        url: https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-linux-x86_64
+        dest: "{{ Type_Install.User_Home }}/{{ Compose_File.New_Name }}"
+        mode: 0775
+        owner: "{{ User.Name_Group }}"
+        group: "{{ User.Name_Group }}"
+
+    - name: Grupo y Usuario Docker
+      ansible.builtin.user:
+        name: "{{ User.Name_Group }}"
+        groups: "{{ Docker.Group }}"
+        append: true
+
+    - name: Instalar Docker-Compose-pip
+      ansible.builtin.pip:
+        name: docker-compose
+        state: present
+
+# -----------------------------------
+
+
+    - name: Reiniciar Docker
+      ansible.builtin.service:
+        name: docker
+        state: restarted
