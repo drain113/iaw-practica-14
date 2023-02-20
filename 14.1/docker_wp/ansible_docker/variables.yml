@@ -18,3 +18,9 @@ Docker:
   Group: docker
   Service: docker.service
   File: docker-compose.yml
+
+MySQL:
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_PASSWORD: wp_pass
+  MYSQL_DATABASE: wp_db
+  MYSQL_USER: wp_user

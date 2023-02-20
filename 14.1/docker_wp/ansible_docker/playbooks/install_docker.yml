@@ -16,13 +16,13 @@
         update_cache: true
 
 # ----------- Docker -------------
-    - name: Install aptitude
+    - name: Instalar aptitude
       apt:
         name: aptitude
         state: latest
         update_cache: true
 
-    - name: Install required system packages
+    - name: Instalar paquetes requeridos
       apt:
         pkg:
           - apt-transport-https
@@ -35,23 +35,23 @@
         state: latest
         update_cache: true
 
-    - name: Add Docker GPG apt Key
+    - name: Añadir GPG Key de Docker
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: Add Docker Repository
+    - name: Descargar repositorio de Docker
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
 
-    - name: Update apt and install docker-ce
+    - name: Actualizar e instalar docker-ce
       apt:
         name: docker-ce
         state: latest
         update_cache: true
 
-    - name: Install Docker Module for Python
+    - name: Instalar módulo de Python de Docker
       pip:
         name: docker
 # -----------------------------------
@@ -85,6 +85,13 @@
         name: docker-compose
         state: present
 
+    - name: Copiar archivo local a remoto
+      ansible.builtin.copy:
+        src: ../../local_docker
+        dest: /home/ubuntu
+        owner: ubuntu
+        group: ubuntu
+        
 # -----------------------------------
 
 
