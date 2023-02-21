@@ -8,7 +8,7 @@ provider "aws" {
 # ----- CREACIÓN SG -------
 
 # Crear grupo de seguridad
-resource "aws_security_group" "sg_prac14_1" {
+resource "aws_security_group" "sg_prac14_2" {
   name        = var.sg_name
   description = var.sg_description
 }
@@ -16,7 +16,7 @@ resource "aws_security_group" "sg_prac14_1" {
 # Crear reglas de entrada
 # Loop para recorrer la lista de puertos
 resource "aws_security_group_rule" "ingress" {
-  security_group_id = aws_security_group.sg_prac14_1.id
+  security_group_id = aws_security_group.sg_prac14_2.id
   type              = "ingress"
 
   count       = length(var.allowed_ingress_ports)
@@ -27,7 +27,7 @@ resource "aws_security_group_rule" "ingress" {
 }
 
 resource "aws_security_group_rule" "egress" {
-  security_group_id = aws_security_group.sg_prac14_1.id
+  security_group_id = aws_security_group.sg_prac14_2.id
   type              = "egress"
 
   from_port   = 0
@@ -41,11 +41,12 @@ resource "aws_security_group_rule" "egress" {
 # ----- CREACIÓN INSTANCIA -------
 
 # Crear la instancia
-resource "aws_instance" "ec2_prac14_1" {
+resource "aws_instance" "sg_prac14_2" {
   ami             = var.ami_id
   instance_type   = var.instance_type
   key_name        = var.key_name
-  security_groups = [aws_security_group.sg_prac14_1.name]
+  security_groups = [aws_security_group.sg_prac14_2.name]
+
 
   tags = {
     Name = var.instance_name
@@ -54,5 +55,5 @@ resource "aws_instance" "ec2_prac14_1" {
 
 # Crear IP Elástica y asignarla
 resource "aws_eip" "ip_elastica" {
-  instance = aws_instance.ec2_prac14_1.id
+  instance = aws_instance.sg_prac14_2.id
 }
