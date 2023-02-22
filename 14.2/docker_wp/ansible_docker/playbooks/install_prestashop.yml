@@ -1,0 +1,22 @@
+---
+- name: Instalar Prestashop
+  hosts: EC2
+  become: true
+
+  tasks:
+
+# ----------- Variables -------------
+
+  - name: Variables
+    ansible.builtin.include_vars:
+      ../variables.yml
+
+# -----------------------------------
+
+  - name: Deploy Prestashop
+    community.docker.docker_compose:
+      project_src: local_docker
+      files:
+        - docker-compose.yml
+      state: present
+      docker_host: unix:///var/run/docker.sock
