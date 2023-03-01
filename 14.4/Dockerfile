@@ -9,8 +9,7 @@ RUN apt update \
     && apt install git -y
 
 # Código de Jose juan de 2048
-RUN git clone https://github.com/josejuansanchez/2048.git  \
-    && mv 2048/* .
+RUN git clone https://github.com/josejuansanchez/2048.git && mv 2048/* .
 
 # Puerto Nginx
 EXPOSE 80
