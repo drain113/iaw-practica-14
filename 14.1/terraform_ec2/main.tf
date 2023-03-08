@@ -26,6 +26,8 @@ resource "aws_security_group_rule" "ingress" {
   cidr_blocks = ["0.0.0.0/0"]
 }
 
+# Crear reglas de salida
+
 resource "aws_security_group_rule" "egress" {
   security_group_id = aws_security_group.sg_prac14_1.id
   type              = "egress"
