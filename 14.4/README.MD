@@ -54,11 +54,11 @@ Hecho esto podremos encontrar la imagen en [Dockerhub](https://hub.docker.com/re
 Para desplegar la aplicación, simplemente habrá que utilizar Docker compose:
 
 ```docker-compose
-docker compse up -d
+docker compose up -d
 ```
 Para eliminarla:
 ```docker-compose
-docker compse down -v 
+docker compose down -v 
 ```
 # Conclusión
 
