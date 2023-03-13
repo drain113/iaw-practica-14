@@ -51,7 +51,7 @@ Hecho esto podremos encontrar la imagen en [Dockerhub](https://hub.docker.com/re
 <br>
 
 # Despliegue
-Para desplegar la aplicación, simplemente habrá que utilizar Docker compose:
+Para desplegar la aplicación, simplemente habrá que hacer lo siguiente:
 
 ```docker-compose
 docker pull vegder/2048
