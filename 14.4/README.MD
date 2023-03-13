@@ -54,11 +54,11 @@ Hecho esto podremos encontrar la imagen en [Dockerhub](https://hub.docker.com/re
 Para desplegar la aplicación, simplemente habrá que utilizar Docker compose:
 
 ```docker-compose
-docker compose up -d
+docker pull vegder/2048
 ```
-Para eliminarla:
+Arrancar la imagen:
 ```docker-compose
-docker compose down -v 
+docker run --rm -d -p 80:80 vegder/2048 
 ```
 # Conclusión
 
